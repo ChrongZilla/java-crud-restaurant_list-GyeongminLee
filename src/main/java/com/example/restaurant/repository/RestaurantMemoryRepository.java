@@ -26,7 +26,10 @@ public class RestaurantMemoryRepository implements RestaurantRepository {
 
     @Override
     public Restaurant findById(Long id) {
-        // TODO: 반복문 돌면서 id 일치하는 것 찾아서 반환, 없으면 null
+        // 반복문: id 일치하는 것 찾아서 반환, 없으면 null 반환
+        for(Restaurant r : restaurants)
+            if(r.getId().equals(id))
+                return r;
         return null;
     }
 
