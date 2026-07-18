@@ -39,4 +39,9 @@ public class Restaurant {
     public void setRestaurantName(String restaurantName) { this.restaurantName = restaurantName; }
     public void setAddress(String address) { this.address = address; }
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
+    @Override
+    public String toString() {
+        return "[" + id + "] " + restaurantName + " (" + category + ") - " + address + " / " + phoneNumber;
+    }
 }
