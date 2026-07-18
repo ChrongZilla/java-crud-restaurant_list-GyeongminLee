@@ -78,8 +78,11 @@ public class ConsoleView {
         // TODO: id 입력받고, 새 값들 입력받아서 Restaurant 생성 후 service.update() 호출
         System.out.println("** 수정 **");
         System.out.print("수정할 id : ");
+        Long id = Long.parseLong(sc.nextLine());
+        /*
         Long id = sc.nextLong();
         sc.nextLine();
+         */
 
         Restaurant existing = service.findById(id);
         if (existing == null) {
