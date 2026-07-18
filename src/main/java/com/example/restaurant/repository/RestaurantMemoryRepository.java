@@ -56,13 +56,24 @@ public class RestaurantMemoryRepository implements RestaurantRepository {
     @Override
     public List<Restaurant> findByKeyword(String keyword) {
         // TODO: restaurantName에 keyword가 포함된 것들만 걸러서 반환
-
-        return null;
+        List<Restaurant> result = new ArrayList<>();
+        for (Restaurant r : restaurants) {
+            if (r.getRestaurantName().contains(keyword)) {
+                result.add(r);
+            }
+        }
+        return result;
     }
 
     @Override
     public List<Restaurant> findByCategory(String category) {
         // TODO: category가 일치하는 것들만 걸러서 반환
-        return null;
+        List<Restaurant> result = new ArrayList<>();
+        for (Restaurant r : restaurants) {
+            if (r.getCategory().equals(category)) {
+                result.add(r);
+            }
+        }
+        return result;
     }
 }
