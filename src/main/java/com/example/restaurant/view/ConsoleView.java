@@ -51,9 +51,12 @@ public class ConsoleView {
         phoneNumber = sc.nextLine();
 
         Restaurant restaurant = new Restaurant(category, restaurantName, address, phoneNumber);
-        service.save(restaurant);
-
-        System.out.println("등록 완료!");
+        try {
+            service.save(restaurant);
+            System.out.println("등록 완료!");
+        } catch (IllegalArgumentException e) {
+            System.out.println("등록 실패: " + e.getMessage());
+        }
     }
 
     private void findAll() {
@@ -97,8 +100,12 @@ public class ConsoleView {
         phoneNumber = sc.nextLine();
 
         Restaurant updated = new Restaurant(id, category, restaurantName, address, phoneNumber);
-        boolean result = service.update(updated);
-        System.out.println(result ? "수정 완료!" : "수정 실패.");
+        try {
+            boolean result = service.update(updated);
+            System.out.println(result ? "수정 완료!" : "수정 실패.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("수정 실패: " + e.getMessage());
+        }
     }
 
     private void deleteRestaurant() {
