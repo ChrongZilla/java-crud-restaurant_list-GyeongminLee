@@ -32,8 +32,8 @@ public class DBConnection {
             // DriverManager.getConnection(url, username, password)로 connection 생성
             connection = DriverManager.getConnection(url, username, password);
 
-            // 성공하면 "[DB 연결 성공]" 출력
-            System.out.println("[DB 연결 성공]");
+            // 성공하면 "[DB 연결 성공]" 출력 -> 콘솔에서 실행시켰을 때 보기가 약간 지저분한 것 같아서 삭제
+            // System.out.println("[DB 연결 성공]");
 
         } catch (Exception e) {
             System.out.println("DB 연결 실패!! " + e.getMessage());
