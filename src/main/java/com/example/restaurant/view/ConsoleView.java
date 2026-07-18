@@ -1,0 +1,143 @@
+package com.example.restaurant.view;
+
+import com.example.restaurant.model.Restaurant;
+import com.example.restaurant.service.RestaurantService;
+import java.util.List;
+import java.util.Scanner;
+
+public class ConsoleView {
+    private final RestaurantService service;
+    private final Scanner sc = new Scanner(System.in);
+
+    public ConsoleView(RestaurantService service) {
+        this.service = service;
+    }
+
+    // 메인 루프
+    public void run() {
+        while (true) {
+            printMenu();
+            int choice = Integer.parseInt(sc.nextLine());
+
+            switch (choice) {
+                case 1 -> register();          // 등록
+                case 2 -> findAll();           // 전체 조회
+                case 3 -> updateRestaurant();  // 수정
+                case 4 -> deleteRestaurant();  // 삭제
+                case 5 -> search();            // 검색
+                case 0 -> { System.out.println("종료합니다."); return; }
+                default -> System.out.println("잘못된 입력입니다.");
+            }
+        }
+    }
+
+    private void printMenu() {
+        System.out.println("\n=== 포항 맛집 관리 ===");
+        System.out.println("1. 등록  2. 전체조회  3. 수정  4. 삭제  5. 검색  0. 종료");
+        System.out.print("선택 > ");
+    }
+
+    private void register() {
+        // TODO: 필드 입력받아서 Restaurant 생성 후 service.save() 호출
+        String category, restaurantName, address, phoneNumber;
+        System.out.println("** 등록 **");
+        System.out.print("업종명 : ");
+        category = sc.nextLine();
+        System.out.print("업소명 : ");
+        restaurantName = sc.nextLine();
+        System.out.print("주소 : ");
+        address = sc.nextLine();
+        System.out.print("전화번호 : ");
+        phoneNumber = sc.nextLine();
+
+        Restaurant restaurant = new Restaurant(category, restaurantName, address, phoneNumber);
+        service.save(restaurant);
+
+        System.out.println("등록 완료!");
+    }
+
+    private void findAll() {
+        // TODO: service.findAll() 호출해서 결과 리스트 출력
+        List<Restaurant> restaurants = service.findAll();
+
+        if(restaurants.isEmpty()) {
+            System.out.println("등록된 맛집이 없습니다.");
+            return;
+        }
+
+        System.out.println("** 전체 조회 **");
+        for (Restaurant r : restaurants) {
+            System.out.println(r);
+        }
+    }
+
+    private void updateRestaurant() {
+        // TODO: id 입력받고, 새 값들 입력받아서 Restaurant 생성 후 service.update() 호출
+        System.out.println("** 수정 **");
+        System.out.print("수정할 id : ");
+        Long id = sc.nextLong();
+        sc.nextLine();
+
+        Restaurant existing = service.findById(id);
+        if (existing == null) {
+            System.out.println("해당 id의 맛집이 없습니다.");
+            return;
+        }
+
+        System.out.println("기존 정보: " + existing);
+
+        String category, restaurantName, address, phoneNumber;
+        System.out.print("새 업종명 : ");
+        category = sc.nextLine();
+        System.out.print("새 업소명 : ");
+        restaurantName = sc.nextLine();
+        System.out.print("새 주소 : ");
+        address = sc.nextLine();
+        System.out.print("새 전화번호 : ");
+        phoneNumber = sc.nextLine();
+
+        Restaurant updated = new Restaurant(id, category, restaurantName, address, phoneNumber);
+        boolean result = service.update(updated);
+        System.out.println(result ? "수정 완료!" : "수정 실패.");
+    }
+
+    private void deleteRestaurant() {
+        // TODO: id 입력받아서 service.delete() 호출, 결과에 따라 메시지 출력
+        System.out.println("** 삭제 **");
+        System.out.print("삭제할 id : ");
+        Long id = Long.parseLong(sc.nextLine());
+
+        boolean result = service.delete(id);
+        System.out.println(result ? "삭제 완료!" : "해당 id의 맛집이 없습니다.");
+    }
+
+    private void search() {
+        // TODO: 이름 검색 / 카테고리 검색 중 선택 → service.findByKeyword() 또는 findByCategory() 호출 후 출력
+        System.out.println("** 검색 **");
+        System.out.println("1. 이름 검색  2. 업종 검색");
+        System.out.print("선택 > ");
+        int type = Integer.parseInt(sc.nextLine());
+
+        List<Restaurant> result;
+        if (type == 1) {
+            System.out.print("검색어(이름) : ");
+            String keyword = sc.nextLine();
+            result = service.findByKeyword(keyword);
+        } else if (type == 2) {
+            System.out.print("업종명(일반음식점/휴게음식점/제과점영업) : ");
+            String category = sc.nextLine();
+            result = service.findByCategory(category);
+        } else {
+            System.out.println("잘못된 입력입니다.");
+            return;
+        }
+
+        if (result.isEmpty()) {
+            System.out.println("검색 결과가 없습니다.");
+            return;
+        }
+        for (Restaurant r : result) {
+            System.out.println(r);
+        }
+    }
+}
