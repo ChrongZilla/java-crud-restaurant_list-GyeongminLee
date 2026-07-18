@@ -69,8 +69,23 @@ public class ConsoleView {
         }
 
         System.out.println("** 전체 조회 ** (총 " + restaurants.size() + "건)");
-        for (Restaurant r : restaurants) {
-            System.out.println(r);
+
+        int pageSize = 10;
+        int total = restaurants.size();
+
+        for (int i = 0; i < total; i++) {
+            System.out.println(restaurants.get(i));
+
+            boolean isPageEnd = (i + 1) % pageSize == 0;
+            boolean isLast = (i == total - 1);
+
+            if (isPageEnd && !isLast) {
+                System.out.print("-- 더 보시겠습니까? (Enter: 계속, q: 그만) : ");
+                String input = sc.nextLine();
+                if (input.equalsIgnoreCase("q")) {
+                    break;
+                }
+            }
         }
     }
 
