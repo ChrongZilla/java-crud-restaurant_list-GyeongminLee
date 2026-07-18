@@ -2,6 +2,7 @@ package com.example.restaurant.seed;
 
 import com.example.restaurant.model.Restaurant;
 import com.example.restaurant.repository.RestaurantFileRepository;
+import com.example.restaurant.repository.RestaurantDBRepository;
 import com.example.restaurant.repository.RestaurantRepository;
 import com.example.restaurant.service.RestaurantService;
 
@@ -12,13 +13,13 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
 public class CsvSeeder {
-
     private static final String CSV_PATH = "src/main/resources/pohang_restaurants.csv";
     // 따옴표 안의 콤마는 무시하고 split하는 정규식
     private static final String CSV_SPLIT_REGEX = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
 
     public static void main(String[] args) {
-        RestaurantRepository repository = new RestaurantFileRepository();
+        // RestaurantRepository repository = new RestaurantFileRepository();
+        RestaurantRepository repository = new RestaurantDBRepository();
         RestaurantService service = new RestaurantService(repository);
 
         int successCount = 0;
