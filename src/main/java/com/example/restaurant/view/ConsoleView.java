@@ -68,7 +68,7 @@ public class ConsoleView {
             return;
         }
 
-        System.out.println("** 전체 조회 **");
+        System.out.println("** 전체 조회 ** (총 " + restaurants.size() + "건)");
         for (Restaurant r : restaurants) {
             System.out.println(r);
         }
@@ -160,6 +160,7 @@ public class ConsoleView {
             System.out.println("검색 결과가 없습니다.");
             return;
         }
+        System.out.println("검색 결과 (총 " + result.size() + "건)");
         for (Restaurant r : result) {
             System.out.println(r);
         }
