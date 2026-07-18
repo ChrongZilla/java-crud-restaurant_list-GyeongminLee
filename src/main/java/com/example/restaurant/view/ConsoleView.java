@@ -55,7 +55,7 @@ public class ConsoleView {
             service.save(restaurant);
             System.out.println("등록 완료!");
         } catch (IllegalArgumentException e) {
-            System.out.println("등록 실패: " + e.getMessage());
+            System.out.println("\n등록 실패!! " + e.getMessage());
         }
     }
 
@@ -104,7 +104,7 @@ public class ConsoleView {
             boolean result = service.update(updated);
             System.out.println(result ? "수정 완료!" : "수정 실패.");
         } catch (IllegalArgumentException e) {
-            System.out.println("수정 실패: " + e.getMessage());
+            System.out.println("\n수정 실패!! " + e.getMessage());
         }
     }
 
