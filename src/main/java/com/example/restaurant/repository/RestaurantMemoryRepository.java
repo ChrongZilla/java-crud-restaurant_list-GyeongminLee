@@ -40,13 +40,11 @@ public class RestaurantMemoryRepository implements RestaurantRepository {
         if (target == null) return false;
 
         // target의 setter들 호출해서 restaurant의 값으로 갱신
-        else {
-            target.setCategory(restaurant.getCategory());
-            target.setRestaurantName(restaurant.getRestaurantName());
-            target.setAddress(restaurant.getAddress());
-            target.setPhoneNumber(restaurant.getPhoneNumber());
-            return true;
-        }
+        target.setCategory(restaurant.getCategory());
+        target.setRestaurantName(restaurant.getRestaurantName());
+        target.setAddress(restaurant.getAddress());
+        target.setPhoneNumber(restaurant.getPhoneNumber());
+        return true;
     }
 
     @Override
@@ -58,6 +56,7 @@ public class RestaurantMemoryRepository implements RestaurantRepository {
     @Override
     public List<Restaurant> findByKeyword(String keyword) {
         // TODO: restaurantName에 keyword가 포함된 것들만 걸러서 반환
+
         return null;
     }
 
