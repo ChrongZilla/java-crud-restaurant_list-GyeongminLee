@@ -38,7 +38,7 @@ public class ConsoleView {
     }
 
     private void register() {
-        // TODO: 필드 입력받아서 Restaurant 생성 후 service.save() 호출
+        // 필드 입력받아서 Restaurant 생성 후 service.save() 호출
         String category, restaurantName, address, phoneNumber;
         System.out.println("** 등록 **");
         System.out.print("업종명(일반음식점/휴게음식점/제과점영업) : ");
@@ -60,7 +60,7 @@ public class ConsoleView {
     }
 
     private void findAll() {
-        // TODO: service.findAll() 호출해서 결과 리스트 출력
+        // service.findAll() 호출해서 결과 리스트 출력
         List<Restaurant> restaurants = service.findAll();
 
         if(restaurants.isEmpty()) {
@@ -75,7 +75,7 @@ public class ConsoleView {
     }
 
     private void updateRestaurant() {
-        // TODO: id 입력받고, 새 값들 입력받아서 Restaurant 생성 후 service.update() 호출
+        // id 입력받고, 새 값들 입력받아서 Restaurant 생성 후 service.update() 호출
         System.out.println("** 수정 **");
         System.out.print("수정할 id : ");
         Long id = Long.parseLong(sc.nextLine());
@@ -112,17 +112,31 @@ public class ConsoleView {
     }
 
     private void deleteRestaurant() {
-        // TODO: id 입력받아서 service.delete() 호출, 결과에 따라 메시지 출력
+        // id 입력받아서 service.delete() 호출, 결과에 따라 메시지 출력
         System.out.println("** 삭제 **");
         System.out.print("삭제할 id : ");
         Long id = Long.parseLong(sc.nextLine());
 
-        boolean result = service.delete(id);
-        System.out.println(result ? "삭제 완료!" : "해당 id의 맛집이 없습니다.");
+        Restaurant existing = service.findById(id);
+        if (existing == null) {
+            System.out.println("해당 id의 맛집이 없습니다.");
+            return;
+        }
+
+        System.out.println("삭제할 정보: " + existing);
+        System.out.print("정말 삭제하시겠습니까? (y / n) : ");
+        String confirm = sc.nextLine();
+
+        if (confirm.equalsIgnoreCase("y")) {
+            boolean result = service.delete(id);
+            System.out.println(result ? "삭제 완료!" : "삭제 실패.");
+        } else {
+            System.out.println("삭제 취소되었습니다.");
+        }
     }
 
     private void search() {
-        // TODO: 이름 검색 / 카테고리 검색 중 선택 → service.findByKeyword() 또는 findByCategory() 호출 후 출력
+        // 이름 검색 / 카테고리 검색 중 선택 → service.findByKeyword() 또는 findByCategory() 호출 후 출력
         System.out.println("** 검색 **");
         System.out.println("1. 이름 검색  2. 업종 검색");
         System.out.print("선택 > ");
