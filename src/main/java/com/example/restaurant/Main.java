@@ -6,7 +6,6 @@ import com.example.restaurant.repository.RestaurantFileRepository;
 import com.example.restaurant.repository.RestaurantDBRepository;
 import com.example.restaurant.service.RestaurantService;
 import com.example.restaurant.view.ConsoleView;
-import com.example.restaurant.util.DBConnection;
 
 public class Main {
     public static void main(String[] args) {
