@@ -18,7 +18,7 @@ public class ConsoleView {
         while (true) {
             printMenu();
             int choice = Integer.parseInt(sc.nextLine());
-
+            System.out.println();
             switch (choice) {
                 case 1 -> register();          // 등록
                 case 2 -> findAll();           // 전체 조회
@@ -41,7 +41,7 @@ public class ConsoleView {
         // TODO: 필드 입력받아서 Restaurant 생성 후 service.save() 호출
         String category, restaurantName, address, phoneNumber;
         System.out.println("** 등록 **");
-        System.out.print("업종명 : ");
+        System.out.print("업종명(일반음식점/휴게음식점/제과점영업) : ");
         category = sc.nextLine();
         System.out.print("업소명 : ");
         restaurantName = sc.nextLine();
