@@ -28,22 +28,31 @@ public class RestaurantMemoryRepository implements RestaurantRepository {
     public Restaurant findById(Long id) {
         // 반복문: id 일치하는 것 찾아서 반환, 없으면 null 반환
         for(Restaurant r : restaurants)
-            if(r.getId().equals(id))
+            if(r.getId().equals(id))    // Long은 래퍼 클래스(객체)임
                 return r;
         return null;
     }
 
     @Override
     public boolean update(Restaurant restaurant) {
-        // TODO: findById로 기존 객체 찾아서, 있으면 필드 값 덮어쓰고 true 반환
-        // 없으면 false 반환
-        return false;
+        // findById로 기존 객체 찾아서, 있으면 필드 값 덮어쓰고 true 반환, 없으면 false 반환
+        Restaurant target = findById(restaurant.getId());
+        if (target == null) return false;
+
+        // target의 setter들 호출해서 restaurant의 값으로 갱신
+        else {
+            target.setCategory(restaurant.getCategory());
+            target.setRestaurantName(restaurant.getRestaurantName());
+            target.setAddress(restaurant.getAddress());
+            target.setPhoneNumber(restaurant.getPhoneNumber());
+            return true;
+        }
     }
 
     @Override
     public boolean delete(Long id) {
         // TODO: 해당 id를 가진 객체를 리스트에서 제거, 성공하면 true 반환
-        return false;
+        return restaurants.removeIf(r -> r.getId().equals(id));
     }
 
     @Override
