@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  mariadb:
+    image: mariadb:11.4
+    container_name: java-crud-restaurant-mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: restaurant_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  mariadb_data:
