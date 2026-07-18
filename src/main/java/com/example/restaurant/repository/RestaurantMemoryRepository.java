@@ -3,10 +3,8 @@ package com.example.restaurant.repository;
 import com.example.restaurant.model.Restaurant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class RestaurantMemoryRepository implements RestaurantRepository {
-    Scanner sc = new Scanner(System.in);
     private List<Restaurant> restaurants = new ArrayList<>();
     private Long nextId = 1L;   // 다음에 부여할 id
 
