@@ -18,7 +18,10 @@ public class RestaurantFileRepository implements RestaurantRepository {
 
     private void loadFromFile() {
         File file = new File(FILE_PATH);
-        if (!file.exists()) return;   // 파일 없으면 빈 상태로 시작
+        if (!file.exists()) {
+            System.out.println("[파일 없음 - 새로 시작합니다]");
+            return;
+        }
 
         try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
@@ -27,18 +30,17 @@ public class RestaurantFileRepository implements RestaurantRepository {
             Long maxId = 0L;
             while ((line = br.readLine()) != null) {
                 if (line.isBlank()) continue;
-
-                String[] parts = line.split("\\|", -1);   // -1: 빈 필드도 유지
+                String[] parts = line.split("\\|", -1);
                 Long id = Long.parseLong(parts[0]);
                 String category = parts[1];
                 String restaurantName = parts[2];
                 String address = parts[3].isEmpty() ? null : parts[3];
                 String phoneNumber = parts[4].isEmpty() ? null : parts[4];
-
                 restaurants.add(new Restaurant(id, category, restaurantName, address, phoneNumber));
                 if (id > maxId) maxId = id;
             }
             nextId = maxId + 1;
+            System.out.println("[파일 읽기 성공 - " + restaurants.size() + "건 로드됨]");
 
         } catch (IOException e) {
             System.out.println("파일 로드 실패: " + e.getMessage());

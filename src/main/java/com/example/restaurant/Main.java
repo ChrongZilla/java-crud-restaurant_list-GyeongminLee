@@ -9,9 +9,16 @@ import com.example.restaurant.view.ConsoleView;
 
 public class Main {
     public static void main(String[] args) {
-        // RestaurantRepository repository = new RestaurantMemoryRepository();
+        /*
+        System.out.println("[메모리 버전으로 실행 중입니다]\n");
+        RestaurantRepository repository = new RestaurantMemoryRepository();
+         */
+        System.out.println("[파일 버전으로 실행 중입니다]\n");
         RestaurantRepository repository = new RestaurantFileRepository();
-        // RestaurantRepository repository = new RestaurantDBRepository();
+        /*
+        System.out.println("[DB 버전으로 실행 중입니다]\n");
+        RestaurantRepository repository = new RestaurantDBRepository();
+         */
         RestaurantService service = new RestaurantService(repository);
         ConsoleView view = new ConsoleView(service);
         view.run();
