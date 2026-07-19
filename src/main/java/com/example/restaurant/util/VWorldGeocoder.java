@@ -54,19 +54,22 @@ public class VWorldGeocoder {
 
             HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
 
+            // System.out.println("HTTP 상태 코드: " + httpResponse.statusCode());   // 디버깅용
+            // System.out.println("응답 본문: " + httpResponse.body());              // 디버깅용
+
             JSONObject json = new JSONObject(httpResponse.body());
             JSONObject response = json.getJSONObject("response");
             String status = response.getString("status");
 
             if (!status.equals("OK")) {
-                return null;   // 주소를 못 찾음 (status가 NOT_FOUND 등)
+                return null;
             }
 
             JSONObject point = response.getJSONObject("result").getJSONObject("point");
-            double x = point.getDouble("x");   // 경도(longitude)
-            double y = point.getDouble("y");   // 위도(latitude)
+            double x = point.getDouble("x");
+            double y = point.getDouble("y");
 
-            return new double[]{y, x};   // [위도, 경도] 순서로 반환
+            return new double[]{y, x};
 
         } catch (Exception e) {
             System.out.println("좌표 변환 실패!! " + e.getMessage());

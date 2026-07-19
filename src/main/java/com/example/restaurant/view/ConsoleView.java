@@ -2,6 +2,8 @@ package com.example.restaurant.view;
 
 import com.example.restaurant.model.Restaurant;
 import com.example.restaurant.service.RestaurantService;
+import com.example.restaurant.util.VWorldGeocoder;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,6 +27,7 @@ public class ConsoleView {
                 case 3 -> updateRestaurant();  // 수정
                 case 4 -> deleteRestaurant();  // 삭제
                 case 5 -> search();            // 검색
+                case 6 -> distanceCalc();      // 거리 계산
                 case 0 -> { System.out.println("종료합니다."); return; }
                 default -> System.out.println("잘못된 입력입니다.");
             }
@@ -33,7 +36,7 @@ public class ConsoleView {
 
     private void printMenu() {
         System.out.println("\n=== 포항 맛집 관리 ===");
-        System.out.println("1. 등록  2. 전체조회  3. 수정  4. 삭제  5. 검색  0. 종료");
+        System.out.println("1. 등록  2. 전체조회  3. 수정  4. 삭제  5. 검색  6. 거리 계산  0. 종료");
         System.out.print("선택 > ");
     }
 
@@ -179,5 +182,47 @@ public class ConsoleView {
         for (Restaurant r : result) {
             System.out.println(r);
         }
+    }
+
+    private static final String HGU_ADDRESS = "경상북도 포항시 북구 흥해읍 한동로 558";
+
+    private void distanceCalc() {
+        System.out.println("** 거리 계산 **");
+        System.out.print("검색어(이름) : ");
+        String keyword = sc.nextLine();
+
+        List<Restaurant> candidates = service.findByKeyword(keyword);
+        if (candidates.isEmpty()) {
+            System.out.println("검색 결과가 없습니다.");
+            return;
+        }
+
+        for (Restaurant r : candidates) {
+            System.out.println(r);
+        }
+
+        System.out.println();
+
+        System.out.print("거리를 계산할 id : ");
+        Long id = Long.parseLong(sc.nextLine());
+        Restaurant target = service.findById(id);
+
+        if (target == null) {
+            System.out.println("해당 id의 맛집이 없습니다.");
+            return;
+        }
+
+        double[] hguCoord = VWorldGeocoder.getCoordinates(HGU_ADDRESS);
+        double[] targetCoord = VWorldGeocoder.getCoordinates(target.getAddress());
+
+        if (hguCoord == null || targetCoord == null) {
+            System.out.println("좌표를 찾을 수 없습니다.");
+            return;
+        }
+
+        double distance = VWorldGeocoder.calculateDistance(
+                hguCoord[0], hguCoord[1], targetCoord[0], targetCoord[1]);
+
+        System.out.printf("한동대학교로부터 %s까지의 직선거리: %.2fkm%n", target.getRestaurantName(), distance);
     }
 }
