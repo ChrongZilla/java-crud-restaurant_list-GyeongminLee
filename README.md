@@ -104,8 +104,8 @@ CREATE TABLE restaurants (
 ```
 
 ## 8. 주요 기능 실행 예시
+![주요 기능 실행 화면](captures/2,3,5,6.png)
 
-*(스크린샷 첨부 예정 — 등록/전체조회/검색/거리계산 화면)*
 
 ## 9. Git Branch 전략
 
